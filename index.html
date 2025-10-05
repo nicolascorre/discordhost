@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="co">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hosting para Bots de Discord</title>
+  <link href="https://discordhost.com" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
+    }
+    header {
+      text-align: center;
+      padding: 60px 20px;
+      background: rgba(0,0,0,0.6);
+    }
+    header h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+    }
+    header p {
+      font-size: 1.2em;
+      color: #ccc;
+    }
+    section {
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .features, .plans {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #444;
+    }
+    .card h3 {
+      margin-top: 0;
+      color: #00ffff;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0,0,0,0.6);
+      font-size: 0.9em;
+      color: #aaa;
+    }
+    a {
+      color: #00ffff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🔥 Discord Bot Hosting</h1>
+    <p>Streaming 24/7 con reconexión automática, proxies y visualizadores</p>
+  </header>
+
+  <section>
+    <h2>🚀 Características</h2>
+    <div class="features">
+      <div class="card">
+        <h3>Uptime 24/7</h3>
+        <p>Tu bot estará siempre activo, incluso tras caídas o reinicios.</p>
+      </div>
+      <div class="card">
+        <h3>Reconexión Automática</h3>
+        <p>FFmpeg + lógica personalizada para mantener el stream vivo.</p>
+      </div>
+      <div class="card">
+        <h3>Panel Web</h3>
+        <p>Controla tu bot desde cualquier lugar con nuestro dashboard.</p>
+      </div>
+      <div class="card">
+        <h3>Metadatos en Tiempo Real</h3>
+        <p>Visualiza la canción actual, artista y más en tu página.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>💸 Planes</h2>
+    <div class="plans">
+      <div class="card">
+        <h3>Free</h3>
+        <p>1 bot básico<br>Sin reconexión<br>Sin panel</p>
+      </div>
+      <div class="card">
+        <h3>Pro</h3>
+        <p>Hasta 3 bots<br>Reconexión + panel<br>Soporte básico</p>
+      </div>
+      <div class="card">
+        <h3>Ultra</h3>
+        <p>Bots ilimitados<br>Visualizadores + metadatos<br>Soporte premium</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>📬 Contacto</h2>
+    <p>¿Tienes dudas o quieres un plan personalizado?<br>
+    Escríbenos a <a href="mailto:hosting@discordbots.com">hosting@discordbots.com</a></p>
+  </section>
+
+  <footer>
+    &copy; 2025 Hosting para Bots de Discord. Diseñado por Nicolás.
+  </footer>
+
+</body>
+</html>
+
+<section>
+  <h2>🎛️ Lanzar tu Bot</h2>
+  <form id="botForm">
+    <label>Nombre del Bot:</label><br>
+    <input type="text" name="botName" required><br><br>
+
+    <label>Token del Bot:</label><br>
+    <input type="text" name="token" required><br><br>
+
+    <label>URL del Stream:</label><br>
+    <input type="text" name="streamUrl" required><br><br>
+
+    <button type="submit">Lanzar Bot</button>
+  </form>
+  <p id="responseMsg"></p>
+</section>
+
+</body><script>
+document.getElementById('botForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const botName = form.botName.value;
+  const token = form.token.value;
+  const streamUrl = form.streamUrl.value;
+
+  try {
+    const res = await fetch('http://localhost:3000/api/bots/launch', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ botName, token, streamUrl })
+    });
+
+    const data = await res.json();
+    document.getElementById('responseMsg').textContent = data.message || data.error;
+  } catch (err) {
+    document.getElementById('responseMsg').textContent = 'Error al conectar con el servidor';
+  }
+});
+</script>
+
